@@ -16,7 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from guestbookapp import views
 
+app_name = "guestbookapp"
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.landing, name='landing'),
+    path('login/', views.loginview, name='loginview'),
+    path('guestbook/', views.guestbookview, name='guestbookview'),
 ]
