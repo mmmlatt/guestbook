@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from guestbookapp import views
 
 app_name = "guestbookapp"
@@ -24,4 +26,4 @@ urlpatterns = [
     path('', views.landing, name='landing'),
     path('login/', views.loginview, name='loginview'),
     path('guestbook/', views.guestbookview, name='guestbookview'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

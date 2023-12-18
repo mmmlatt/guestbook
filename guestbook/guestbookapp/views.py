@@ -13,6 +13,17 @@ def landing(request):
         return redirect("loginview")
 
 def loginview(request):
+    context = {}
+    if request.method=="POST":
+        username = request.POST["username"]
+        password = request.POST["pwd"]
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect("guestbookview")
+        else:
+            context["message"] = "Invalid username or password"
+            return render(request, "guestbookapp/login.html", context)
     return render(request, "guestbookapp/login.html")
 
 def guestbookview(request):
