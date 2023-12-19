@@ -23,9 +23,11 @@
         </div>
 
         <div class="row justify-content-center">
-            <div class="col-md-12 text-center bg-primary text-white mb-3">
-                <button class="btn btn-dark btn-large" type="submit">Create new entry</button>
-            </div>
+            <form action="{% url 'create' %}", method="GET">
+                <div class="col-md-12 text-center bg-primary text-white mb-3">
+                    <button class="btn btn-dark btn-large" type="submit">Create new entry</button>
+                </div>
+            </form>
         </div>
 
         <div class="row justify-content-center">
@@ -36,7 +38,9 @@
                             <p class="card-body bg-primary">{{ entry.entry_text }}</p>
                             <p class="card-text bg-primary">{{ entry.author}}</p>
                         </div>
+                        {% if entry.entry_image %}
                         <img class="card-img-bottom" src="{{MEDIA_URL}}{{entry.entry_image.url}}">
+                        {% endif %}
                     </div>
                 {% endfor %}
             </div>

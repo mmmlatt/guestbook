@@ -51,3 +51,20 @@ def guestbookview(request):
         context["entries"] = entries
         return render(request, "guestbookapp/guestbook.html", context=context)
     return redirect("loginview")
+
+def create_entry(request):
+    #POST New entry created, add to db
+    context = {}
+    if request.method == "POST":
+        #Check that mandatory fields are filled
+        if request.POST["entry_text"] != "" and request.POST["author"] != "":
+            entry_text = request.POST["entry_text"]
+            author = request.POST["author"]
+            entry_image = request.FILES.get("entry_image", None)
+            Entry.objects.create(entry_text=entry_text, author=author, entry_image=entry_image)
+            return redirect("guestbookview")
+        #If mandatory fields are not filled, send back to creation page with message
+        context["message"] = "Please fill in mandatory fields: text and author"
+        return render(request, "guestbookapp/create.html", context=context)
+    #GET request, open the create entry page
+    return render(request, "guestbookapp/create.html")
