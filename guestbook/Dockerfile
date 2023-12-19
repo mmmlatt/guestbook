@@ -14,6 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 8000
 
 # Define environment variables
+ENV SECRET_KEY=$SECRET_KEY
 ENV DJANGO_SETTINGS_MODULE=guestbook.settings
 
 # Collect static files
