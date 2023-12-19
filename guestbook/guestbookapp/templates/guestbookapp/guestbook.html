@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body class="bg-primary">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <p class="text-md-left"></p>
+            </div>
+            <div class="col-md-4 text-md-middle">
+                <h1 class="text-white text-center">Guestbook</h1>
+            </div>
+            <div class="col-md-4 text-md-right">
+                <form action="{% url 'logoutview' %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-dark" type="submit">Log out</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-12 text-center bg-primary text-white mb-3">
+                <button class="btn btn-dark btn-large" type="submit">Create new entry</button>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 text-center bg-primary text-white">
+                {% for entry in entries %}
+                    <div class="card mb-3">
+                        <div class="card-body bg-primary">
+                            <p class="card-body bg-primary">{{ entry.entry_text }}</p>
+                            <p class="card-text bg-primary">{{ entry.author}}</p>
+                        </div>
+                        <img class="card-img-bottom" src="{{MEDIA_URL}}{{entry.entry_image.url}}">
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
