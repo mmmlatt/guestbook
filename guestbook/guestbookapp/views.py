@@ -6,12 +6,14 @@ from .models import Entry
 
 #Logic to redirect user to login page or guestbook, depeding on whether the user is authenticated
 def landing(request):
+    context = {}
     #If user has signed in, direct to app
     if request.user.is_authenticated:
         return redirect("guestbookview")
     #If not signed in, direct to login page
     else:
-        return redirect("loginview")
+        context["message"] = "Please log in first"
+        return render(request, "guestbookapp/login.html", context)
 
 def loginview(request):
     context = {}
@@ -30,6 +32,15 @@ def loginview(request):
             return render(request, "guestbookapp/login.html", context)
     #Open login site, if GET request    
     return render(request, "guestbookapp/login.html")
+
+def logoutview(request):
+    context = {}
+    #If user is logged in, log them out, and return to login page
+    if request.user is not None and request.method == "POST":
+        context["message"] = "Successfully logged out"
+        logout(request)
+        return render(request, "guestbookapp/login.html", context)
+    return redirect("guestbookview")
 
 def guestbookview(request):
     context = {}
