@@ -5,7 +5,30 @@
     {% load static %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
-<body class="bg-primary">
+<style>
+    @font-face {
+    font-family: 'GuestBookCursive';
+    src: url('{% static "guestbookapp/GreatVibes-Regular.ttf" %}') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    }
+    .card-text {
+        font-family: "GuestBookCursive";
+        font-size: xx-large;
+    }
+    .card-body {
+        border-radius: 15px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        border: 1px solid black;
+    }
+    h1 {
+        font-family: "GuestBookCursive";
+        font-size: 600%;
+    }
+
+</style>
+<body style="background-image: url('{% static 'guestbookapp/bookcover.jpg' %}')">
     <div class="container">
         <div class="row">
             <div class="col-md-4">
@@ -24,23 +47,23 @@
 
         <div class="row justify-content-center">
             <form action="{% url 'create' %}", method="GET">
-                <div class="col-md-12 text-center bg-primary text-white mb-3">
+                <div class="col-md-12 text-center text-black mb-3">
                     <button class="btn btn-dark btn-large" type="submit">Create new entry</button>
                 </div>
             </form>
         </div>
 
-        <div class="row justify-content-center">
-            <div class="col-md-4 text-center bg-primary text-white">
+        <div class="row justify-content-center" style="border-radius: 15px;">
+            <div class="col-md-4 text-center text-black" style="background-image: url('{% static 'guestbookapp/page.png' %}'); border-radius: 15px">
                 {% for entry in entries %}
-                    <div class="card mb-3">
-                        <div class="card-body bg-primary">
-                            <p class="card-body bg-primary">{{ entry.entry_text }}</p>
-                            <p class="card-text bg-primary">{{ entry.author}}</p>
+                    <div class="card mb-3" style="background-image: url('{% static 'guestbookapp/page.png' %}')">
+                        <div class="card-body">
+                            <p class="card-text"><b>{{ entry.entry_text }}</b></p>
+                            <p class="card-text"><b>{{ entry.author}}</b></p>
+                            {% if entry.entry_image %}
+                            <img class="card-img-bottom" src="{{MEDIA_URL}}{{entry.entry_image.url}}">
+                            {% endif %}
                         </div>
-                        {% if entry.entry_image %}
-                        <img class="card-img-bottom" src="{{MEDIA_URL}}{{entry.entry_image.url}}">
-                        {% endif %}
                     </div>
                 {% endfor %}
             </div>

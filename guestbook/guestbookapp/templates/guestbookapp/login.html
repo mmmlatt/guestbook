@@ -5,9 +5,21 @@
     {% load static %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
-<body class="bg-primary min-vh-100">
+<style>
+    @font-face {
+    font-family: 'GuestBookCursive';
+    src: url('{% static "guestbookapp/GreatVibes-Regular.ttf" %}') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    }
+    h1 {
+        font-family: "GuestBookCursive";
+        font-size: 600%;
+    }
+</style>
+<body style="background-image: url('{% static 'guestbookapp/bookcover.jpg' %}')">
     <div class="container-fluid">
-        <div class="col-md-12 text-center bg-primary text-white">
+        <div class="col-md-12 text-center text-white">
             <h1>Login page</h1>
             {% if message %}
                 <div class="alert alert-warning">
