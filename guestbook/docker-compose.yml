@@ -2,7 +2,7 @@ version: "3"
 
 services:
   guestbook:
-    image: guestbook
+    image: mmmlatt/guestbook-project:0.1
     container_name: guestbook-app
     environment:
       SECRET_KEY: ${SECRET_KEY}
@@ -26,11 +26,10 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
   nginx:
-    image: nginx
+    image: mmmlatt/guestbook-nginx:latest
     container_name: nginx-server
     restart: always
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - static_volume:/guestbook/static
       - media_volume:/guestbook/media
     ports:
