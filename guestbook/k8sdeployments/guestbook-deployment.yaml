@@ -20,12 +20,12 @@ spec:
           valueFrom:
             secretKeyRef:
               name: guestbook-secrets
-              value: django-secret-key
+              key: django-secret-key
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
               name: guestbook-secrets
-              value: postgres-password
+              key: postgres-password
         volumeMounts:
         - name: static-volume
           mountPath: /guestbook/static
@@ -34,7 +34,7 @@ spec:
       volumes:
       - name: static-volume
         persistentVolumeClaim:
-          claimName: static-media-pvc
+          claimName: static-pvc
       - name: media-volume
         persistentVolumeClaim:
-          claimName: static-media-pvc
+          claimName: media-pvc

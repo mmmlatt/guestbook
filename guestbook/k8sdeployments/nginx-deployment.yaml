@@ -25,10 +25,10 @@ spec:
       volumes:
       - name: static-volume
         persistentVolumeClaim:
-          claimName: static-media-pvc
+          claimName: static-pvc
       - name: media-volume
         persistentVolumeClaim:
-          claimName: static-media-pvc
+          claimName: media-pvc
 
 ---
 
@@ -43,3 +43,18 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    app: nginx
