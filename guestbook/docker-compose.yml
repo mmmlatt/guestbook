@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  guestbook:
+    image: mmmlatt/guestbook-project:0.1
+    container_name: guestbook-app
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - static_volume:/guestbook/static
+      - media_volume:/guestbook/media
+    expose:
+      - "8000"
+    depends_on:
+      - db
+  db:
+    image: postgres
+    container_name: guestbook-db-1
+    environment:
+      POSTGRES_DB: "guestbookdb"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    expose:
+      - "5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  nginx:
+    image: mmmlatt/guestbook-nginx:latest
+    container_name: nginx-server
+    restart: always
+    volumes:
+      - static_volume:/guestbook/static
+      - media_volume:/guestbook/media
+    ports:
+      - "80:80"
+    depends_on:
+      - guestbook
+      - db
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:

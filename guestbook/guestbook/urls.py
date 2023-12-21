@@ -29,3 +29,5 @@ urlpatterns = [
     path('logout/', views.logoutview, name='logoutview'),
     path('create/', views.create_entry, name='create'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
