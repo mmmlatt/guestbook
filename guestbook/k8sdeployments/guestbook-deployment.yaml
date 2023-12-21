@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guestbook-app
+spec:
+  replicas: 1  # Adjust as needed
+  selector:
+    matchLabels:
+      app: guestbook
+  template:
+    metadata:
+      labels:
+        app: guestbook
+    spec:
+      containers:
+      - name: guestbook
+        image: mmmlatt/guestbook-project:0.1
+        env:
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: guestbook-secrets
+              value: django-secret-key
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: guestbook-secrets
+              value: postgres-password
+        volumeMounts:
+        - name: static-volume
+          mountPath: /guestbook/static
+        - name: media-volume
+          mountPath: /guestbook/media
+      volumes:
+      - name: static-volume
+        persistentVolumeClaim:
+          claimName: static-media-pvc
+      - name: media-volume
+        persistentVolumeClaim:
+          claimName: static-media-pvc
