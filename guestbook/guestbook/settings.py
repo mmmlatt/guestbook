@@ -76,23 +76,24 @@ WSGI_APPLICATION = 'guestbook.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 #For DEV
-""" DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if DEBUG == True:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-} """
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'guestbookdb',
-        'PORT': 5432,
-        'HOST': "guestbook-db-1",
-        'USER': "postgres",
-        'PASSWORD': os.environ["POSTGRES_PASSWORD"],
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'guestbookdb',
+            'PORT': 5432,
+            'HOST': "guestbook-db-1",
+            'USER': "postgres",
+            'PASSWORD': os.environ["POSTGRES_PASSWORD"],
+        }
     }
-}
 
 
 # Password validation
@@ -130,7 +131,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-#STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_DIR = BASE_DIR / 'static'
 STATIC_ROOT = "/guestbook/static/"
 MEDIA_DIR = BASE_DIR / 'media'
