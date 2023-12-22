@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: guestbook
-        image: mmmlatt/guestbook-project:0.1
+        image: mmmlatt/guestbook-project:0.2
         env:
         - name: SECRET_KEY
           valueFrom:
