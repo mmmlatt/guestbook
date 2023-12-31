@@ -31,6 +31,13 @@ spec:
           mountPath: /guestbook/static
         - name: media-volume
           mountPath: /guestbook/media
+        resources:
+          limits:
+            cpu: "0.3"
+            memory: "512Mi"
+          requests:
+            cpu: "0.1"
+            memory: "256Mi"
       volumes:
       - name: static-volume
         persistentVolumeClaim:
