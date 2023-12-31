@@ -93,8 +93,8 @@ else:
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'guestbookdb',
             'PORT': 5432,
-            #If cmd argument has test in it, it will use localhost db. This is for running manage.py test
-            'HOST': "guestbook-db-1" if not IS_TEST_ENV else "127.0.0.1",
+            #Search for a env variable set to localhost when running tests with pytest, otherwise use production host guestbook-db-1
+            'HOST': os.environ.get("DJANGO_TEST_DB_HOST", "guestbook-db-1"),
             'USER': "postgres",
             'PASSWORD': os.environ["POSTGRES_PASSWORD"],
         },
