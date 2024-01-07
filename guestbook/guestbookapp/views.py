@@ -55,7 +55,7 @@ def guestbookview(request):
 def create_entry(request):
     #POST New entry created, add to db
     context = {}
-    if request.method == "POST":
+    if request.method == "POST" and request.user.is_authenticated:
         #Check that mandatory fields are filled
         if request.POST["entry_text"] != "" and request.POST["author"] != "":
             entry_text = request.POST["entry_text"]
@@ -66,5 +66,9 @@ def create_entry(request):
         #If mandatory fields are not filled, send back to creation page with message
         context["message"] = "Please fill in mandatory fields: text and author"
         return render(request, "guestbookapp/create.html", context=context)
+    #If user is not authenticated, and GET request, send to login page with message
+    elif not request.user.is_authenticated:
+        context["message"] = "Please log in first"
+        return render(request, "guestbookapp/login.html", context=context)
     #GET request, open the create entry page
     return render(request, "guestbookapp/create.html")

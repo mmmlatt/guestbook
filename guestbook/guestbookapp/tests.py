@@ -132,6 +132,8 @@ class GuestbookTests(TestCase):
     
     def test_creating_valid_entry(self):
         """Valid POST request for entry creation"""
+        #Log in first
+        self.client.login(username="test_user", password="testpassword")
         #Remove any similar entry first
         Entry.objects.filter(entry_text="foo", author ="bar").delete()
         #Data for entry
@@ -144,6 +146,8 @@ class GuestbookTests(TestCase):
 
     def test_creating_invalid_entry(self):
         """Invalid POST request with missing mandatory value"""
+        #Log in first
+        self.client.login(username="test_user", password="testpassword")
         #Empty data for entry
         data = {"entry_text": "", "author": ""}
         #POST request
@@ -155,11 +159,24 @@ class GuestbookTests(TestCase):
         #Status code OK
         self.assertEqual(response.status_code, 200)
     
-    def test_create_view_get(self):
-        """Test opening the create view with a get request"""
+    def test_create_view_get_authenticated(self):
+        """Test opening the create view with a get request, when authenticated"""
+        #Log in first
+        self.client.login(username="test_user", password="testpassword")
         #GET request
         response = self.client.get(reverse("create"))
         #Check template
         self.assertTemplateUsed(response, "guestbookapp/create.html")
         #Status code OK
         self.assertEqual(response.status_code, 200)
+    
+    def test_create_view_get_not_authenticated(self):
+        """Test opening the create view with a get request, when not authenticated. Sends to login page with message"""
+        #Log out any user first
+        self.client.logout()
+        #GET request
+        response = self.client.get(reverse("create"))
+        #Check template
+        self.assertTemplateUsed(response, "guestbookapp/login.html")
+        #Check for error message
+        self.assertContains(response, "Please log in first")
