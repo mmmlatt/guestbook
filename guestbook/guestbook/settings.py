@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,6 +28,9 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 DEBUG = False
 
 ALLOWED_HOSTS = ['*']
+
+# Determine whether it's a test environment when running manage.py test
+IS_TEST_ENV = 'test' in sys.argv
 
 
 # Application definition
@@ -89,10 +93,11 @@ else:
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'guestbookdb',
             'PORT': 5432,
-            'HOST': "guestbook-db-1",
+            #Search for a env variable set to localhost when running tests with pytest, otherwise use production host guestbook-db-1
+            'HOST': os.environ.get("DJANGO_TEST_DB_HOST", "guestbook-db-1"),
             'USER': "postgres",
             'PASSWORD': os.environ["POSTGRES_PASSWORD"],
-        }
+        },
     }
 
 
