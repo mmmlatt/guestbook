@@ -15,6 +15,7 @@ spec:
       containers:
       - name: guestbook
         image: mmmlatt/guestbook-project:0.2
+        imagePullPolicy: Always
         env:
         - name: SECRET_KEY
           valueFrom:
