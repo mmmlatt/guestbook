@@ -20,6 +20,9 @@ jobs:
       run:
         working-directory: ./guestbook
 
+    env:
+      SECRET_KEY: "testsecretkey"
+      
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python 3.12
