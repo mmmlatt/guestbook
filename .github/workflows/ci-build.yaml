@@ -2,9 +2,9 @@ name: ci-build
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "implement-ci" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "implement-ci" ]
 
 permissions:
   contents: read
